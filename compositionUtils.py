@@ -26,7 +26,7 @@ class Series(object):
 	""" Contains methods to generate and work with numeric series.
 	"""
 	def __init__(self):
-		""" Initialization of the class does nothing.
+		""" Initialization of the class. Does nothing.
 		"""
 		pass
 
