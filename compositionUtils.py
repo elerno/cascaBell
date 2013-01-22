@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-# Copyright Ernesto Illescas-Peláez 2007-2013
+# Copyright Ernesto Illescas-Peláez 2009-2013
 
 # This file is part of cascaBell.
 
