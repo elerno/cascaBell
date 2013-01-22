@@ -23,92 +23,64 @@
 from math import sqrt
 
 class Series(object):
-	""" Contains methods to generate numeric series
+	""" Contains methods to generate and work with numeric series.
 	"""
-	def __init__(self, harmonic=0):
-		""" The initialization parameter should be 0 or 1. When zero is
-		chosen, the methods construct series with as many elements as
-		desired. If the value is one, the series are limited to a number
-		of elements, depending on the series. The criterium fot the
-		limit is: 20 (minimum audible frequency) elevated to the last
-		value of the series has to be less than 20,000 (maximum audible
-		frequency).
-		harmonic	---> 0 for any series, 1 for spectral-purpose series
+	def __init__(self):
+		""" Initialization of the class does nothing.
 		"""
-		if not harmonic or harmonic ==1:
-			self.harmonic = harmonic
-		else:
-			print 'Initialization parameter must be 0 or 1'
+		pass
 
-
-	def even(self, noOfElmnts):
-		""" Constructs an even-number series of noOfElements.
-		noOfElements	---> the desired elements in the series
+	def even(self, numOfElements):
+		""" Constructs an even-number series of numOfElements.
+		numOfElements	---> length of the returned list
+		return			-->> a list of even numbers
 		"""
-		evenLst    = []
+		evenList    = []
 		even        = 2
-		# If series is intended for a harmonic series, limit the value
-		#to the audible range (controlled by the self.harmonic).
-		if self.harmonic == 1 and noOfElmnts > 500:
-			noOfElmnts = 500
-
-		for x in xrange(noOfElmnts):
-			evenLst.append(even)
+		for x in xrange(numOfElements):
+			evenList.append(even)
 			even = even + 2
-		return evenLst
-
-
-	def odd(self, noOfElmnts):
-		""" Constructs an odd-number series of noOfElements.
-		noOfElements	---> the desired elements in the series
+		return evenList
+	
+	
+	def odd(self, numOfElements):
+		""" Constructs an odd-number series of numOfElements.
+		numOfElements	---> length of the returned list
+		return			-->> a list of odd numbers
 		"""
-		oddLst    = []
+		oddList    = []
 		odd         = 1
 		counter     = 0
-		# If series is intended for a harmonic series, limit the value
-		#to the audible range (controlled by the self.harmonic).
-		if self.harmonic == 1 and noOfElmnts > 499:
-			noOfElmnts = 499
-		
-		for x in xrange(noOfElmnts):
-			oddLst.append(odd)
+		for x in xrange(numOfElements):
+			oddList.append(odd)
 			odd = odd+2
-		return oddLst
-
-	def fibo(self, noOfElmnts):
-		""" Constructs a fibonacci-number series of noOfElements.
-		noOfElements	---> the desired elements in the series
+		return oddList
+	
+	
+	def fibo(self, numOfElements):
+		""" Constructs a fibonacci-number series of numOfElements.
+		numOfElements	---> length of the returned list
+		return			-->> a list of fibonacci numbers
 		"""
-		fiboLst    = []
+		fiboList    = []
 		a           = 0
 		b           = 1
-		# If series is intended for a harmonic series, limit the value
-		#to the audible range (controlled by the self.harmonic), and do
-		#not repeat 1 at the beginning of the series (i.e. don't double
-		#the fundamental.
-		if self.harmonic == 1 and noOfElmnts > 14:
-			noOfElmnts = 14
-			a = 1
-		
-		for x in xrange(noOfElmnts):
-			fiboLst.append(b)
-			a, b = b, a+b
-		return fiboLst
-
-
-	def prime(self, noOfElmnts):
-		""" Constructs a prime-number series of noOfElements.
-		noOfElmnts	---> the desired elements in the series
+		for x in xrange(numOfElements):
+			fiboList.append(b)
+			a = b
+			b = a + b
+		return fiboList
+	
+	
+	def prime(self, numOfElements):
+		""" Constructs a prime-number series of numOfElements.
+		numOfElements	---> length of the returned list
+		return			-->> a list of prime numbers
 		"""
 		primeLst    = []
 		candidate   = 2
 		counter     = 0
-		# If series is intended for a harmonic series, limit the value
-		#to the audible range (controlled by the self.harmonic).
-		if self.harmonic == 1 and noOfElmnts > 168:
-			noOfElmnts = 168
-
-		while counter < noOfElmnts:
+		while counter < numOfElements:
 			maxTest = int(sqrt(candidate)) + 1
 			for x in range(2, maxTest):
 				if candidate % x == 0:
@@ -121,17 +93,17 @@ class Series(object):
 		return primeLst
 
 
-	def geometric(self, growFactor, noOfElmnts):
+	def geometric(self, growFactor, numOfElements):
 		""" Constructs a list of geometrical values, where the starting
 		point is the power.
 		growFactor		---> a number from which to begin.
-		noOfElmnts	---> noOfElmnts	---> the desired elements in the
+		numOfElements	---> numOfElements	---> the desired elements in the
 						series
 		return		--> a geometrical list
 		"""
 		geoLst	= [growFactor]
 
-		for x in xrange(noOfElmnts - 1):
+		for x in xrange(numOfElements - 1):
 			lastVal = geoLst[-1]
 			newVal = lastVal * growFactor
 			geoLst.append(newVal)
@@ -183,17 +155,17 @@ class Series(object):
 		return newLst
 
 
-	def aureusSer(self, start, noOfElements, reverse=0):
-		""" Constructs a series of noOfElements elements where each
+	def aureusSer(self, start, numOfElements, reverse=0):
+		""" Constructs a series of numOfElements elements where each
 		point is the Aureus point of the former.
 		start			---> value to be subdivided
-		noOfElements	---> the number of elements.
+		numOfElements	---> the number of elements.
 		reverse		---> if 1, reverses the series.
 		return		-->> a list
 		"""
 		aureus = start
 		aureusSer = []
-		for x in xrange(noOfElements):
+		for x in xrange(numOfElements):
 			aureusSer.append(aureus)
 			aureus *= 0.618
 		if reverse:
