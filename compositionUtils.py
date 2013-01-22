@@ -35,8 +35,8 @@ class Series(object):
 		numOfElements	---> length of the returned list
 		return			-->> a list of even numbers
 		"""
-		evenList    = []
-		even        = 2
+		evenList	= []
+		even		= 2
 		for x in xrange(numOfElements):
 			evenList.append(even)
 			even = even + 2
@@ -48,12 +48,12 @@ class Series(object):
 		numOfElements	---> length of the returned list
 		return			-->> a list of odd numbers
 		"""
-		oddList    = []
-		odd         = 1
-		counter     = 0
+		oddList	= []
+		odd		= 1
+		counter	= 0
 		for x in xrange(numOfElements):
 			oddList.append(odd)
-			odd = odd+2
+			odd = odd + 2
 		return oddList
 	
 	
@@ -62,9 +62,9 @@ class Series(object):
 		numOfElements	---> length of the returned list
 		return			-->> a list of fibonacci numbers
 		"""
-		fiboList    = []
-		a           = 0
-		b           = 1
+		fiboList	= []
+		a			= 0
+		b			= 1
 		for x in xrange(numOfElements):
 			fiboList.append(b)
 			a = b
@@ -77,9 +77,9 @@ class Series(object):
 		numOfElements	---> length of the returned list
 		return			-->> a list of prime numbers
 		"""
-		primeLst    = []
-		candidate   = 2
-		counter     = 0
+		primeList	= []
+		candidate	= 2
+		counter		= 0
 		while counter < numOfElements:
 			maxTest = int(sqrt(candidate)) + 1
 			for x in range(2, maxTest):
@@ -87,74 +87,73 @@ class Series(object):
 					candidate += 1
 					break
 			else:
-				primeLst.append(candidate)
+				primeList.append(candidate)
 				candidate += 1
 				counter += 1
-		return primeLst
-
-
+		return primeList
+	
+	
 	def geometric(self, growFactor, numOfElements):
-		""" Constructs a list of geometrical values, where the starting
-		point is the power.
-		growFactor		---> a number from which to begin.
-		numOfElements	---> numOfElements	---> the desired elements in the
-						series
-		return		--> a geometrical list
+		""" Constructs a list of geometric values, starting at growFactor.
+		growFactor		---> the ratio between succesive terms
+		numOfElements	---> length of the returned list
+		return			-->> a list of geometric values
 		"""
-		geoLst	= [growFactor]
-
+		geoList	= [growFactor]
 		for x in xrange(numOfElements - 1):
 			lastVal = geoLst[-1]
 			newVal = lastVal * growFactor
-			geoLst.append(newVal)
-		return geoLst
-
-
-	def logarithmic(self, hastaNo, noDeElementos, reverse=0):
+			geoList.append(newVal)
+		return geoList
+	
+	
+	def logarithmic(self, limit, numOfElements):
+		""" Constructs a list of numOfElements logarithmic values, with
+		limit maximum value.
+		limit			---> list's maximum value
+		numOfElements	---> length of the returned list
+		return			-->> a list of prime numbers
 		"""
-		"""
-		pasos	= noDeElementos - 1
-		poder	= 1.0 / pasos
-		unPaso	= pow(hastaNo, poder)
-
-		logaritmicos = [1]
-
-		for x in range(pasos):
-			nuevoValor = logaritmicos[-1] * unPaso
-			logaritmicos.append(nuevoValor)
-
-		if reverse == 1:
-			intrvls = self.serToIntrvl(logaritmicos)
-			intrvls.reverse()
-			retrgrdSeries = self.intrvlsToSer(intrvls, logaritmicos[0])
-			logaritmicos = retrgrdSeries
-		return logaritmicos
-
-
-	def serToIntrvl(self, lst):
+		steps			= numOfElements - 1
+		power			= 1.0 / steps
+		oneStep			= pow(limit, power)
+		logarithmicList	= [1]
+		for x in range(steps):
+			newValue = logarithmicList[-1] * oneStep
+			logarithmicList.append(newValue)
+		return logarithmicList
+	
+	
+	def seriesToIntervals(self, points):
 		""" Converts a list of points into a list of intervals.
+		points	---> a list of points.
+		return	-->> a list of intervals.
 		"""
-		intrvls = []
-
-		a = lst[0]
-		for x in lst:
-			newIntrvl = x - a
-			intrvls.append(newIntrvl)
+		intrvals	= []
+		a			= points[0]
+		for x in points:
+			newIntrval = x - a
+			intrvals.append(newIntrval)
 			a = x
-		intrvls.pop(0)
-		return intrvls
-
-
-	def intrvlsToSer(self, intrvls, strt):
-
-		newLst	= [strt]
-
-		for x in intrvls:
-			elmnt = x + newLst[-1]
-			newLst.append(elmnt)
-		return newLst
-
-
+		intrvals.pop(0)
+		return intrvals
+	
+	
+	def intervalsToSeries(self, intervals, start, modulo=None):
+		""" Constructs a list of values from a list of intervals.
+		intervals	---> a list of intervals.
+		start		---> the starting ponit of the returned series.
+		return		-->> a list
+		"""
+		series	= [start]
+		for x in intervals:
+			element = x + series[-1]
+			if modulo:
+				element = element % 12
+			series.append(element)
+		return series
+	
+	
 	def aureusSer(self, start, numOfElements, reverse=0):
 		""" Constructs a series of numOfElements elements where each
 		point is the Aureus point of the former.
