@@ -187,42 +187,35 @@ class Scaling(object):
 		return scaledValue
 	
 	
-	
-class ListTools(object):
-	""" Contains methods to manipulate lists.
-	"""
-	def __init__(self):
-		"""
-		"""
-		pass
-
-
-	def addConstant(self, constant, lst):
-		""" Adds a constant to all elements in a list.
-		constatn	---> a number
-		lstToTotl	---> a list
-		return		-->> a list with the constant added to its elements
-		"""
-		newList = []
-		for x in lst:
-			newValue = x + constant
-			newList.append(newValue)
-		return newList
-	
-	
-	def normList(self, toNormalize, normalizeTo=1):
+	def normalize(self, toNormalize, normalizeTo=1):
 		""" Normalize values of a list to make its max = normalizeTo.
 		toNormalize	---> list to normalize
 		normalizeTo	---> maximum value
 		return		-->> a list
 		"""
-
-		vMax = max(toNormalize)
+		largestValue = max(toNormalize) * 1.0
 		normList = []
 		for x in toNormalize:
-			newVal = x / (vMax * 1.0) * normalizeTo
+			newVal = x / largestValue * normalizeTo
 			normList.append(newVal)
 		return normList
+	
+	
+	
+class ListTools(object):
+	""" Contains methods to manipulate lists.
+	"""
+	def addConstant(self, constant, originalList):
+		""" Adds a constant to all elements in a list.
+		constant	---> a number
+		originalList	---> a list
+		return		-->> a list with the constant added to its elements
+		"""
+		newList = []
+		for x in originalList:
+			newValue = x + constant
+			newList.append(newValue)
+		return newList
 
 ##========================================================================
 	def normListSumTo(self, L, sumTo=1):
