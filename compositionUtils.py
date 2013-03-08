@@ -25,11 +25,6 @@ from math import sqrt
 class Series(object):
 	""" Contains methods to generate and work with numeric series.
 	"""
-	def __init__(self):
-		""" Initialization of the class. Does nothing.
-		"""
-		pass
-
 	def even(self, numOfElements):
 		""" Constructs an even-number series of numOfElements.
 		numOfElements	---> length of the returned list
@@ -159,7 +154,7 @@ class Series(object):
 		point is the Aureus point of the former.
 		start			---> value to be subdivided
 		numOfElements	---> the number of elements.
-		reverse		---> if 1, reverses the series.
+		reverse		---> if 1, reverses the constructed series.
 		return		-->> a list
 		"""
 		aureus = start
@@ -172,139 +167,55 @@ class Series(object):
 		return aureusSer
 
 
-########
-
 
 class Scaling(object):
-	""" Contains methods for scaling values or lists.
+	""" Contains methods for scaling values and for scaling lists.
 	"""
-	def lstToTotl(self, aList, newTotl):
-		"""Scales the values in aList so they add up to a new total.
-		aList	---> the list to scale
-		newTotl	---> the sum of all elements of the scaled list
-		return	--> a scaled list
-		"""
-		oldTotl	= 0.0
-		newLst		= []
-
-		for x in aList:
-			oldTotl += x
-
-		if oldTotl:
-			scaleFactor = newTotl / oldTotl
-		else:
-			scaleFactor = newTotl
-
-		for x in aList:
-			newVal = x * scaleFactor
-			newLst.append(newVal)
-		return newLst
-
-
-	def valToRng(self, val, oldMin, oldMax, newMin, newMax):
+	def valueToRange(self, value, oldMin, oldMax, newMin, newMax):
 		"""Scales a value within a range to it's equivalent in a new range.
-		val		---> the value to be scaled.
+		value	---> the value to be scaled.
 		oldMin	---> the minimum of the old range
 		oldMax	---> the maximum of the old range
 		newMin	---> the minimum of the new range
 		newMax	---> the maximum of the new range
 		return 	--> a scaled value
 		"""
-		oldRng = (oldMax*1.0) - oldMin
-		newRng = newMax - newMin
-		ratio = newRng/oldRng
-		scaledVal	= ((val - oldMin) * ratio + newMin)
-		return scaledVal
-########
-
-class Interpolate(object):
-	""" Contains methods for interpolation.
-	"""
-	def __init__(self):
-		self.ListTools = ListTools()
+		oldRange = (oldMax*1.0) - oldMin
+		newRang = newMax - newMin
+		ratio = newRange/oldRange
+		scaledValue	= ((value - oldMin) * ratio + newMin)
+		return scaledValue
 	
 	
-	def gradlLstsLin(self, original, target):
-		""" Returns a list where the first value comes from the original
-		list, the last one from the target, and in-between values that 			incrementally approach the target. The interpolation is linear.
-		"""
-		newLst		= []
-		noOfStps	= len(target)
-		counter		= 0
-
-		for x in xrange(noOfStps):
-			if len(original) != len(target):
-				print 'Interpol: lists must be the same size'
-				break
-			dist = target[counter] - original[counter]
-			oneStp = float(dist) / noOfStps
-			partlInrpl = original[counter] + (oneStp * (counter + 1))
-			newLst.append(partlInrpl)
-			counter += 1
-		return newLst
-
-
-	def aToBInSteps(self, a, b, numSteps):
-		""" Construct a list that linearly goes from a to b in n steps.
-		"""
-		if a < b:
-			start	= a
-			end		= b
-		else:
-			start	= b
-			end		= a
-#		else:
-#			print 'Start value and end value can not be the same!'
-#		if numSteps < 1:
-#			print 'numSteps must be greater than 1!'
-		series = range(0, numSteps)
-		magnitude = end - start
-		scaledSeries = self.ListTools.normList(series, magnitude)
-		interpolation = []
-		for x  in scaledSeries:
-			element = x + start
-			interpolation.append(element)
-		if a > b:
-			interpolation.reverse()
-		return interpolation
-
-
-
-class ListTools(object):
-	""" Contains methods to manipulate lists.
-	"""
-	def __init__(self):
-		"""
-		"""
-		pass
-
-
-	def addConstant(self, constant, lst):
-		""" Adds a constant to all elements in a list.
-		constatn	---> a number
-		lstToTotl	---> a list
-		return		-->> a list with the constant added to its elements
-		"""
-		newList = []
-		for x in lst:
-			newValue = x + constant
-			newList.append(newValue)
-		return newList
-	
-	
-	def normList(self, toNormalize, normalizeTo=1):
+	def normalize(self, toNormalize, normalizeTo=1):
 		""" Normalize values of a list to make its max = normalizeTo.
 		toNormalize	---> list to normalize
 		normalizeTo	---> maximum value
 		return		-->> a list
 		"""
-
-		vMax = max(toNormalize)
+		largestValue = max(toNormalize) * 1.0
 		normList = []
 		for x in toNormalize:
-			newVal = x / (vMax * 1.0) * normalizeTo
+			newVal = x / largestValue * normalizeTo
 			normList.append(newVal)
 		return normList
+	
+	
+	
+class ListTools(object):
+	""" Contains methods to manipulate lists.
+	"""
+	def addConstant(self, constant, originalList):
+		""" Adds a constant to all elements in a list.
+		constant	---> a number
+		originalList	---> a list
+		return		-->> a list with the constant added to its elements
+		"""
+		newList = []
+		for x in originalList:
+			newValue = x + constant
+			newList.append(newValue)
+		return newList
 
 ##========================================================================
 	def normListSumTo(self, L, sumTo=1):
