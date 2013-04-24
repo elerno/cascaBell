@@ -201,7 +201,22 @@ class Scaling(object):
 		return normList
 	
 	
-	
+	def normalizeSumTo(self, oldList, sumTo=1):
+	    """ Normalize the values of list to make them sum to a value.
+	    oldList		---> a list to normalize
+	    sumTo		---> the value the new list will add-up to
+	    return		-->> a list
+	    """
+	    # Add up all the elements in oldList
+	    addition = reduce(lambda x,y:x+y, oldList)
+	    newList = []
+	    for x in oldList:
+		    newVal = x / float(addition) * sumTo
+		    newList.append(newVal)
+	    return newList
+
+
+
 class ListTools(object):
 	""" Contains methods to manipulate lists.
 	"""
@@ -216,11 +231,3 @@ class ListTools(object):
 			newValue = x + constant
 			newList.append(newValue)
 		return newList
-
-##========================================================================
-	def normListSumTo(self, L, sumTo=1):
-	    '''normalize values of a list to make it sum = sumTo'''
-	
-	    sum = reduce(lambda x,y:x+y, L)
-	    return [ x/(sum*1.0)*sumTo for x in L]
-##========================================================================
